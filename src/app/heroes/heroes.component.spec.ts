@@ -1,39 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Hero } from '../hero';
-import { HeroService } from '../hero.service';
+import { HeroesComponent } from './heroes.component';
 
-@Component({
-  selector: 'app-heroes',
-  templateUrl: './heroes.component.html',
-  styleUrls: ['./heroes.component.css']
-})
-export class HeroesComponent implements OnInit {
-  heroes: Hero[];
+describe('HeroesComponent', () => {
+  let component: HeroesComponent;
+  let fixture: ComponentFixture<HeroesComponent>;
 
-  constructor(private heroService: HeroService) { }
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ HeroesComponent ]
+    })
+    .compileComponents();
+  }));
 
-  ngOnInit() {
-    this.getHeroes();
-  }
+  beforeEach(() => {
+    fixture = TestBed.createComponent(HeroesComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-  getHeroes(): void {
-    this.heroService.getHeroes()
-    .subscribe(heroes => this.heroes = heroes);
-  }
-
-  add(name: string): void {
-    name = name.trim();
-    if (!name) { return; }
-    this.heroService.addHero({ name } as Hero)
-      .subscribe(hero => {
-        this.heroes.push(hero);
-      });
-  }
-
-  delete(hero: Hero): void {
-    this.heroes = this.heroes.filter(h => h !== hero);
-    this.heroService.deleteHero(hero).subscribe();
-  }
-
-}
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});
